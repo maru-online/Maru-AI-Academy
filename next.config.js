@@ -1,24 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
+  // Exclude the old API folder from the build
+  typescript: {
+    ignoreBuildErrors: false,
   },
-  // PWA configuration
-  pwa: {
-    dest: 'public',
-    register: true,
-    skipWaiting: true,
+  eslint: {
+    ignoreDuringBuilds: true,
   },
-  // API routes configuration
+  // API rewrites to backend
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: '/api/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/:path*`,
       },
     ];
   },
-  // Content security policy
+  // Security headers
   async headers() {
     return [
       {

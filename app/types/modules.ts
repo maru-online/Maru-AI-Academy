@@ -174,4 +174,9 @@ export const COURSES: Course[] = [
 export function getCourseBySlug(slug: string): Course | undefined {
   return COURSES.find(c => c.slug === slug)
 }
-// Keep existing exports underneath...
+
+export function getModuleBySlug(slug: string): Module | undefined {
+  const allModules = STREAMS.flatMap(s => s.modules)
+  return allModules.find(m => m.slug === slug)
+}
+
