@@ -1,11 +1,12 @@
 {
   "name": "Maru AI Academy",
   "short_name": "Maru AI",
-  "description": "AI Productivity Training Platform",
+  "description": "AI Productivity Training Platform for African Professionals",
   "start_url": "/",
+  "id": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#000000",
+  "theme_color": "#2563eb",
   "orientation": "portrait-primary",
   "icons": [
     {
