@@ -6,14 +6,8 @@
 
 ---
 
-## 🎯 Project Overview
-
-**Objectives:**
-1. Migrate from Azure to Google Cloud Platform
-2. Implement full Tailwind CSS integration
-3. Modernize Next.js architecture with component-based design
-4. Establish robust CI/CD pipeline on Google Cloud
-5. Optimize content delivery and performance
+## 🎯 ProjectThe user's main objective is to migrate the Maru AI Academy project from Azure to **Amazon Web Services (AWS)**. This involves modernizing the frontend with Tailwind CSS and a component-based architecture, restructuring the backend for **AWS App Runner / ECS**, migrating the database to **Amazon RDS (PostgreSQL)**, and setting up a robust CI/CD pipeline. The ultimate goal is to achieve a more scalable, cost-effective, and maintainable platform.
+ance
 
 **Success Metrics:**
 - Zero downtime migration
@@ -220,43 +214,27 @@ API Restructuring
 
 ---
 
-### Day 3 (Wednesday) - Cloud Run Deployment (API)
+### Day 3 (Wednesday) - AWS Deployment Setup
 **Tasks:**
-- [ ] Deploy API to Cloud Run:
-  ```bash
-  gcloud run deploy maru-api \
-    --source ./api \
-    --region us-central1 \
-    --platform managed \
-    --allow-unauthenticated
-  ```
-- [ ] Configure environment variables in Cloud Run
-- [ ] Set up Cloud Run IAM permissions
-- [ ] Configure custom domain (api.maruacademy.com)
-- [ ] Test all API endpoints on Cloud Run
-- [ ] Set up request logging
+- [ ] **Container Registry**: Set up **Amazon ECR** (Elastic Container Registry).
+- [ ] **Deployment Service**: Configure **AWS App Runner** (recommended for ease) or **ECS Fargate**.
+- [ ] **CI/CD**: Create `.github/workflows/deploy-aws.yml`.
+- [ ] **IAM**: Create generic service roles for execution.
 
 **Deliverables:**
-- API running on Cloud Run
-- All endpoints accessible
-- Custom domain configured
+- Code pushed to ECR.
+- Backend service running on AWS URL.
 
-**Time Estimate:** 4-6 hours
-
----
-
-### Day 4 (Thursday) - Database Setup
+### Day 4 (Thursday) - Database Migration (RDS)
 **Tasks:**
-- [ ] Create Cloud SQL PostgreSQL instance:
-  ```bash
-  gcloud sql instances create maru-db \
-    --database-version=POSTGRES_15 \
-    --tier=db-g1-small \
-    --region=us-central1 \
-    --backup-start-time=03:00
-  ```
-- [ ] Create database and user
-- [ ] Configure Cloud SQL Proxy for local development
+- [ ] **Provisioning**: Create **Amazon RDS for PostgreSQL** instance.
+- [ ] **Connectivity**: Configure Security Groups to allow App Runner/EC2 access.
+- [ ] **Migration**: Run `npx prisma migrate deploy` against RDS.
+- [ ] **Data**: Update connection strings in `backend/.env` (and AWS Secrets Manager).
+
+**Deliverables:**
+- Live PostgreSQL database on AWS.
+- Backend connected to real data.
 - [ ] Set up connection pooling
 - [ ] Configure automated backups
 - [ ] Document connection strings
