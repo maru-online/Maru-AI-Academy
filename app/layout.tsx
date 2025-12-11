@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Outfit } from 'next/font/google'
 import './globals.css'
 import { Header, Footer } from './components/layouts'
@@ -15,12 +15,17 @@ const outfit = Outfit({
   display: 'swap',
 })
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#2563eb',
+}
+
 export const metadata: Metadata = {
   title: 'Maru AI Academy - Master AI Productivity',
   description: 'AI Productivity Training Platform - Learn to use AI effectively in your business. From basic concepts to advanced team automation.',
   manifest: '/manifest.json',
-  themeColor: '#2563eb',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
   keywords: ['AI training', 'AI productivity', 'business automation', 'AI academy'],
   authors: [{ name: 'Maru AI Academy' }],
   openGraph: {
