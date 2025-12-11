@@ -19,6 +19,9 @@ RUN npm run build
 # Stage 2: Production
 FROM node:18-slim
 
+# Install OpenSSL (required by Prisma)
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 # Install production dependencies only
