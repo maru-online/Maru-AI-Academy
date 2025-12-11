@@ -23,15 +23,56 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Maru AI Academy - Master AI Productivity',
-  description: 'AI Productivity Training Platform - Learn to use AI effectively in your business. From basic concepts to advanced team automation.',
+  metadataBase: new URL('https://academy.maruonline.com'),
+  title: {
+    default: 'Maru AI Academy - Master AI Productivity',
+    template: '%s | Maru AI Academy',
+  },
+  description: 'AI Productivity Training Platform for African Professionals. Learn to use AI effectively in your business - from basic concepts to advanced team automation.',
   manifest: '/manifest.json',
-  keywords: ['AI training', 'AI productivity', 'business automation', 'AI academy'],
-  authors: [{ name: 'Maru AI Academy' }],
+  keywords: ['AI training', 'AI productivity', 'business automation', 'AI academy', 'Africa', 'professional development'],
+  authors: [{ name: 'Maru AI Academy', url: 'https://academy.maruonline.com' }],
+  creator: 'Maru Online',
+  publisher: 'Maru Online',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: 'Maru AI Academy - Master AI Productivity',
-    description: 'Transform your business workflows with AI. Learn from basic concepts to advanced automation.',
     type: 'website',
+    locale: 'en_US',
+    url: 'https://academy.maruonline.com',
+    siteName: 'Maru AI Academy',
+    title: 'Maru AI Academy - Master AI Productivity',
+    description: 'Transform your business workflows with AI. Learn from basic concepts to advanced automation for African professionals.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Maru AI Academy - AI Productivity Training',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Maru AI Academy - Master AI Productivity',
+    description: 'AI Productivity Training Platform for African Professionals',
+    images: ['/og-image.png'],
+  },
+  verification: {
+    // Add these when you have them
+    // google: 'your-google-verification-code',
+  },
+  alternates: {
+    canonical: 'https://academy.maruonline.com',
   },
 }
 
