@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 ProjectThe user's main objective is to migrate the Maru AI Academy project from Azure to **Amazon Web Services (AWS)**. This involves modernizing the frontend with Tailwind CSS and a component-based architecture, restructuring the backend for **AWS App Runner / ECS**, migrating the database to **Amazon RDS (PostgreSQL)**, and setting up a robust CI/CD pipeline. The ultimate goal is to achieve a more scalable, cost-effective, and maintainable platform.
+## 🎯 ProjectThe user's main objective is to migrate the Maru AI Academy project from Azure to **Google Cloud Platform (GCP)**. This involves modernizing the frontend with Tailwind CSS and a component-based architecture, restructuring the backend for **Google Cloud Run**, migrating the database to **Cloud SQL (PostgreSQL)**, and setting up a robust CI/CD pipeline. The ultimate goal is to achieve a more scalable, cost-effective, and maintainable platform.
 ance
 
 **Success Metrics:**
@@ -214,26 +214,26 @@ API Restructuring
 
 ---
 
-### Day 3 (Wednesday) - AWS Deployment Setup
+### Day 3 (Wednesday) - GCP Deployment Setup
 **Tasks:**
-- [ ] **Container Registry**: Set up **Amazon ECR** (Elastic Container Registry).
-- [ ] **Deployment Service**: Configure **AWS App Runner** (recommended for ease) or **ECS Fargate**.
-- [ ] **CI/CD**: Create `.github/workflows/deploy-aws.yml`.
-- [ ] **IAM**: Create generic service roles for execution.
+- [ ] **Artifact Registry**: Create Docker repository in GCP.
+- [ ] **Service**: Deploy to **Cloud Run**.
+- [ ] **CI/CD**: Create `.github/workflows/deploy-gcp.yml`.
+- [ ] **IAM**: Create Service Account for GitHub Actions.
 
 **Deliverables:**
-- Code pushed to ECR.
-- Backend service running on AWS URL.
+- Code pushed to Artifact Registry.
+- Backend service running on Cloud Run URL.
 
-### Day 4 (Thursday) - Database Migration (RDS)
+### Day 4 (Thursday) - Database Migration (Cloud SQL)
 **Tasks:**
-- [ ] **Provisioning**: Create **Amazon RDS for PostgreSQL** instance.
-- [ ] **Connectivity**: Configure Security Groups to allow App Runner/EC2 access.
-- [ ] **Migration**: Run `npx prisma migrate deploy` against RDS.
-- [ ] **Data**: Update connection strings in `backend/.env` (and AWS Secrets Manager).
+- [ ] **Provisioning**: Create **Cloud SQL for PostgreSQL** instance.
+- [ ] **Connectivity**: Configure **Cloud SQL Auth Proxy** or Public IP (secured).
+- [ ] **Migration**: Run `npx prisma migrate deploy` against Cloud SQL.
+- [ ] **Secrets**: Store DB credentials in **Secret Manager**.
 
 **Deliverables:**
-- Live PostgreSQL database on AWS.
+- Live PostgreSQL database on GCP.
 - Backend connected to real data.
 - [ ] Set up connection pooling
 - [ ] Configure automated backups
