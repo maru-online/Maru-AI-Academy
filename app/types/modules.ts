@@ -1,0 +1,131 @@
+export interface Module {
+  id: string
+  title: string
+  description: string
+  stream: 'beginner' | 'intermediate'
+  order: number
+  slug: string
+  icon?: string
+  duration?: string
+  lessonsCount?: number
+}
+
+export interface Stream {
+  id: 'beginner' | 'intermediate'
+  title: string
+  description: string
+  modules: Module[]
+}
+
+export const STREAMS: Stream[] = [
+  {
+    id: 'beginner',
+    title: 'Beginner Stream',
+    description: 'Perfect for getting started with AI. Learn the fundamentals of AI productivity, safety, and basic automation.',
+    modules: [
+      {
+        id: 'b-m1',
+        title: 'AI Made Simple',
+        description: 'Foundations & Safety. Understand what AI is, how it works, and how to use it securely in your workplace.',
+        stream: 'beginner',
+        order: 1,
+        slug: 'module-1',
+        icon: 'bulb',
+        duration: '2 hours',
+        lessonsCount: 5
+      },
+      {
+        id: 'b-m2',
+        title: 'Prompts That Work at Work',
+        description: 'Master the art of prompting. Learn techniques to get consistent, high-quality results from AI models.',
+        stream: 'beginner',
+        order: 2,
+        slug: 'module-2',
+        icon: 'message',
+        duration: '2.5 hours',
+        lessonsCount: 6
+      },
+      {
+        id: 'b-m3',
+        title: 'Picking Tools & No-Code Quick Wins',
+        description: 'Navigate the AI tool landscape and build simple automations without writing any code.',
+        stream: 'beginner',
+        order: 3,
+        slug: 'module-3',
+        icon: 'tool',
+        duration: '3 hours',
+        lessonsCount: 4
+      },
+      {
+        id: 'b-m4',
+        title: 'Your First Live Workflow',
+        description: 'Capstone Project. Build and deploy a real-world AI workflow that solves a specific business problem.',
+        stream: 'beginner',
+        order: 4,
+        slug: 'module-4',
+        icon: 'rocket',
+        duration: '4 hours',
+        lessonsCount: 3
+      }
+    ]
+  },
+  {
+    id: 'intermediate',
+    title: 'Intermediate Stream',
+    description: 'For power users ready to scale AI across teams. Advanced workflows, governance, and team automation.',
+    modules: [
+      {
+        id: 'i-m1',
+        title: 'From Ad-Hoc to Repeatable',
+        description: 'Transform one-off success into reliable systems. Standardize your prompts and workflows.',
+        stream: 'intermediate',
+        order: 1,
+        slug: 'int-module-1',
+        icon: 'repeat',
+        duration: '3 hours',
+        lessonsCount: 5
+      },
+      {
+        id: 'i-m2',
+        title: 'Semantic Search & Private Knowledge',
+        description: 'Unlock your company data. Learn about RAG, vector databases, and chatting with your documents.',
+        stream: 'intermediate',
+        order: 2,
+        slug: 'int-module-2',
+        icon: 'search',
+        duration: '3.5 hours',
+        lessonsCount: 6
+      },
+      {
+        id: 'i-m3',
+        title: 'No-Code Automations That Stick',
+        description: 'Advanced no-code strategies. Build robust, error-handled automations that run reliably.',
+        stream: 'intermediate',
+        order: 3,
+        slug: 'int-module-3',
+        icon: 'puzzle',
+        duration: '4 hours',
+        lessonsCount: 8
+      },
+      {
+        id: 'i-m4',
+        title: 'Measurement, Governance & Handover',
+        description: 'Leading AI initiatives. How to measure ROI, ensure compliance, and manage team adoption.',
+        stream: 'intermediate',
+        order: 4,
+        slug: 'int-module-4',
+        icon: 'shield',
+        duration: '3 hours',
+        lessonsCount: 4
+      }
+    ]
+  }
+]
+
+export function getModuleBySlug(slug: string): Module | undefined {
+  for (const stream of STREAMS) {
+    const module = stream.modules.find(m => m.slug === slug)
+    if (module) return module
+  }
+  return undefined
+}

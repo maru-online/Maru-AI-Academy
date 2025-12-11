@@ -1,0 +1,123 @@
+import { getModuleBySlug } from '@/types/modules'
+import { Badge, Button, Card } from '@/components/ui'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+
+export default function ModulePage({ params }: { params: { slug: string } }) {
+  const module = getModuleBySlug(params.slug)
+
+  if (!module) {
+    notFound()
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 pb-20">
+      {/* Hero Header */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <Link href="/modules" className="text-gray-500 hover:text-gray-900 mb-6 inline-flex items-center text-sm font-medium transition-colors">
+            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Curriculum
+          </Link>
+          
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <Badge variant={module.stream === 'beginner' ? 'success' : 'primary'}>
+                  {module.stream === 'beginner' ? 'Beginner Stream' : 'Intermediate Stream'}
+                </Badge>
+                <span className="text-gray-400">•</span>
+                <span className="text-gray-600 font-medium">Module {module.order}</span>
+              </div>
+              
+              <h1 className="text-4xl sm:text-5xl font-heading font-bold text-gray-900 mb-6">
+                {module.title}
+              </h1>
+              
+              <div className="flex flex-wrap items-center gap-6 text-gray-600">
+                <div className="flex items-center">
+                  <span className="text-2xl mr-2">⏱️</span>
+                  {module.duration}
+                </div>
+                <div className="flex items-center">
+                  <span className="text-2xl mr-2">📚</span>
+                  {module.lessonsCount} Lessons
+                </div>
+                <div className="flex items-center">
+                  <span className="text-2xl mr-2">🏆</span>
+                  Certificate on completion
+                </div>
+              </div>
+            </div>
+
+            <Card className="w-full md:w-80 flex-shrink-0 p-6">
+              <div className="text-center mb-6">
+                <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center text-3xl mx-auto mb-4">
+                  {module.icon === 'bulb' ? '💡' : module.icon === 'rocket' ? '🚀' : '📚'}
+                </div>
+                <div className="text-sm text-gray-500">Current Status</div>
+                <div className="text-lg font-bold text-gray-900">Not Started</div>
+              </div>
+              <Button fullWidth size="lg">Start Learning</Button>
+            </Card>
+          </div>
+        </div>
+      </div>
+
+      {/* Content Area */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            <Card>
+              <h2 className="text-2xl font-bold mb-4">About this Module</h2>
+              <p className="text-gray-600 leading-relaxed text-lg">
+                {module.description}
+              </p>
+            </Card>
+
+            <Card>
+              <h2 className="text-2xl font-bold mb-6">What You'll Learn</h2>
+              <ul className="space-y-4">
+                {[1, 2, 3, 4].map((i) => (
+                  <li key={i} className="flex items-start">
+                    <svg className="w-6 h-6 text-green-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-gray-700">Learning objective placeholder {i} goes here. This will come from the content markdown content.</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            <Card>
+              <h3 className="font-bold text-gray-900 mb-4">Course Content</h3>
+              <div className="space-y-0">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="flex items-center p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors border-b last:border-0 border-gray-100">
+                    <div className="w-6 h-6 rounded-full border-2 border-gray-300 flex-shrink-0 mr-3"></div>
+                    <div>
+                      <div className="text-sm font-medium text-gray-900">Lesson {i}</div>
+                      <div className="text-xs text-gray-500">15 mins</div>
+                    </div>
+                    <div className="ml-auto">
+                      <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
