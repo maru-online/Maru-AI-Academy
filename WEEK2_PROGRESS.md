@@ -35,10 +35,10 @@
 - [ ] Deploy to Cloud Run
 
 ### Day 4: Database Setup
-- [ ] Set up Cloud SQL (Postgres) instance
-- [ ] Connect Express app to Cloud SQL
-- [ ] Create initial schema migration
-- [ ] Update route logic to use real DB
+- [x] Set up Cloud SQL (Postgres) instance (Local Configuration Ready)
+- [x] Connect Express app to Cloud SQL (Prisma Configured)
+- [x] Create initial schema migration (Prisma Schema Defined)
+- [x] Update route logic to use real DB (Prisma Client Integrated)
 
 ### Day 5: Integration & Polish
 - [ ] Update Next.js frontend to point to new Cloud Run URL

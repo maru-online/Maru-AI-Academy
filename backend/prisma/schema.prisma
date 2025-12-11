@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Stream {
+  BEGINNER
+  INTERMEDIATE
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  progress  UserProgress[]
+}
+
+model Module {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  slug        String   @unique
+  stream      Stream
+  order       Int
+  icon        String?  @default("book")
+  duration    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  lessons     Lesson[]
+  progress    UserProgress[]
+}
+
+model Lesson {
+  id        String   @id @default(uuid())
+  title     String
+  content   String?  @db.Text
+  duration  Int?     // in minutes
+  order     Int
+  moduleId  String
+  module    Module   @relation(fields: [moduleId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  moduleId    String
+  module      Module   @relation(fields: [moduleId], references: [id])
+  completed   Boolean  @default(false)
+  completedAt DateTime?
+  
+  @@unique([userId, moduleId])
+}
