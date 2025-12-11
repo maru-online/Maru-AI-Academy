@@ -1,7 +1,31 @@
+import { Metadata } from 'next'
 import { getModuleBySlug } from '@/types/modules'
 import { Badge, Button, Card } from '@/components/ui'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+
+type Props = {
+  params: { slug: string }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const module = getModuleBySlug(params.slug)
+  
+  if (!module) {
+    return {
+      title: 'Module Not Found',
+    }
+  }
+
+  return {
+    title: module.title,
+    description: module.description,
+    openGraph: {
+      title: `${module.title} - Maru AI Academy`,
+      description: module.description,
+    },
+  }
+}
 
 export default function ModulePage({ params }: { params: { slug: string } }) {
   const module = getModuleBySlug(params.slug)
