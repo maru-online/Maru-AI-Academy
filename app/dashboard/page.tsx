@@ -1,4 +1,5 @@
 import { getServerSession } from 'next-auth'
+import { signOut } from 'next-auth/react'
 import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { Card, Badge, Button } from '@/components/ui'
@@ -142,9 +143,12 @@ export default async function DashboardPage() {
                 <Link href="/settings" className="block text-sm text-gray-600 hover:text-primary-600">
                   ⚙️ Account Settings
                 </Link>
-                <Link href="/api/auth/signout" className="block text-sm text-red-600 hover:text-red-700">
+                <button 
+                  onClick={() => signOut({ callbackUrl: '/' })} 
+                  className="block text-sm text-red-600 hover:text-red-700 text-left w-full"
+                >
                   🚪 Sign Out
-                </Link>
+                </button>
               </div>
             </Card>
 
