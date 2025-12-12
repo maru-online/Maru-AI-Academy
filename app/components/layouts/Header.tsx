@@ -2,10 +2,12 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { useSession, signOut } from 'next-auth/react'
 import { Button } from '../ui'
 
 export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { data: session } = useSession()
 
   return (
     <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-200 shadow-sm">
@@ -32,9 +34,32 @@ export const Header = () => {
             <Link href="/pricing" className="text-gray-700 hover:text-primary-600 transition-colors font-medium">
               Pricing
             </Link>
-            <Button variant="primary" size="sm">
-              Get Started
-            </Button>
+            
+            {session ? (
+              <div className="flex items-center space-x-4">
+                <Link href="/dashboard">
+                  <Button variant="outline" size="sm">
+                    Dashboard
+                  </Button>
+                </Link>
+                <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 font-bold border border-primary-200">
+                  {session.user?.name?.[0] || 'U'}
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-4">
+                <Link href="/auth/signin">
+                  <span className="text-gray-700 hover:text-primary-600 font-medium cursor-pointer">
+                    Log in
+                  </span>
+                </Link>
+                <Link href="/auth/signup">
+                  <Button variant="primary" size="sm">
+                    Get Started
+                  </Button>
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -65,9 +90,31 @@ export const Header = () => {
               <Link href="/pricing" className="text-gray-700 hover:text-primary-600 transition-colors font-medium">
                 Pricing
               </Link>
-              <Button variant="primary" size="sm" fullWidth>
-                Get Started
-              </Button>
+              
+              {session ? (
+                <>
+                  <Link href="/dashboard" className="text-gray-700 hover:text-primary-600 transition-colors font-medium">
+                    Dashboard
+                  </Link>
+                  <button 
+                    onClick={() => signOut()}
+                    className="text-left text-red-600 hover:text-red-700 font-medium"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/auth/signin" className="text-gray-700 hover:text-primary-600 transition-colors font-medium">
+                    Log in
+                  </Link>
+                  <Link href="/auth/signup">
+                    <Button variant="primary" size="sm" fullWidth>
+                      Get Started
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}
