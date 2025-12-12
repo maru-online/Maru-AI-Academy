@@ -3,6 +3,7 @@ import { Inter, Outfit } from 'next/font/google'
 import './globals.css'
 import { Header, Footer } from './components/layouts'
 import { SessionProvider } from './components/providers'
+import ChatWidget from './components/chatbot/ChatWidget'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -91,6 +92,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <ChatWidget />
         </SessionProvider>
       </body>
     </html>
