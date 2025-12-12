@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { ModuleCard } from '@/components/modules';
 import { Badge } from '@/components/ui';
 import api, { ApiModule } from '@/lib/api';
@@ -14,9 +15,13 @@ interface StreamGroup {
 }
 
 export default function ModulesPage() {
+  const { data: session } = useSession();
   const [modules, setModules] = useState<ApiModule[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Check if user is on PRO or TEAM plan
+  const isPro = (session?.user as any)?.plan === 'PRO' || (session?.user as any)?.plan === 'TEAM';
 
   useEffect(() => {
     async function fetchModules() {
@@ -127,21 +132,27 @@ export default function ModulesPage() {
               {/* Stream Grid */}
               {stream.modules.length > 0 ? (
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  {stream.modules.map((module) => (
-                    <ModuleCard 
-                      key={module.id} 
-                      module={{
-                        id: module.id,
-                        title: module.title,
-                        description: module.description,
-                        stream: module.stream.toLowerCase() as 'beginner' | 'intermediate',
-                        order: module.order,
-                        slug: module.slug,
-                        icon: module.icon,
-                        duration: module.duration
-                      }} 
-                    />
-                  ))}
+                  {stream.modules.map((module) => {
+                    // Logic to lock intermediate stream for non-pro users
+                    const isLocked = stream.id === 'intermediate' && !isPro;
+                    
+                    return (
+                      <ModuleCard 
+                        key={module.id} 
+                        isLocked={isLocked}
+                        module={{
+                          id: module.id,
+                          title: module.title,
+                          description: module.description,
+                          stream: module.stream.toLowerCase() as 'beginner' | 'intermediate',
+                          order: module.order,
+                          slug: module.slug,
+                          icon: module.icon,
+                          duration: module.duration
+                        }} 
+                      />
+                    );
+                  })}
                 </div>
               ) : (
                 <p className="text-gray-500 italic">No modules available yet.</p>

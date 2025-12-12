@@ -56,6 +56,40 @@ export default async function ModulePage({ params }: { params: { slug: string } 
   if (!module) notFound()
 
   // Fetch progress
+  const session = await getServerSession(authOptions)
+  const isPro = (session?.user as any)?.plan === 'PRO' || (session?.user as any)?.plan === 'TEAM'
+  const isLocked = module.stream === 'intermediate' && !isPro
+
+  if (isLocked) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <Card className="max-w-xl w-full text-center p-12">
+          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+            🔒
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            Pro Access Required
+          </h1>
+          <p className="text-lg text-gray-600 mb-8">
+            The <strong>{module.title}</strong> module is exclusively available to Pro Academy members. Upgrade your plan to unlock advanced workflows, governance templates, and more.
+          </p>
+          <div className="space-y-4">
+            <Link href="/pricing" className="block w-full">
+              <Button variant="primary" size="lg" fullWidth>
+                Upgrade to Pro Academy ✨
+              </Button>
+            </Link>
+            <Link href="/modules" className="block w-full">
+              <Button variant="outline" size="lg" fullWidth>
+                Back to Curriculum
+              </Button>
+            </Link>
+          </div>
+        </Card>
+      </div>
+    )
+  }
+
   const progress = await getModuleProgress(module.id)
   const completedLessonIds = new Set(progress.filter(p => p.completed).map(p => p.lessonId))
   

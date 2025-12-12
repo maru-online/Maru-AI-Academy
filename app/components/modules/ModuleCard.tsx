@@ -5,9 +5,10 @@ import { Module } from '@/types/modules'
 interface ModuleCardProps {
   module: Module
   compact?: boolean
+  isLocked?: boolean
 }
 
-export const ModuleCard: React.FC<ModuleCardProps> = ({ module, compact = false }) => {
+export const ModuleCard: React.FC<ModuleCardProps> = ({ module, compact = false, isLocked = false }) => {
   const getIcon = (iconName?: string) => {
     switch(iconName) {
       case 'bulb': return '💡'
@@ -23,16 +24,16 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ module, compact = false 
   }
 
   return (
-    <Card className="h-full flex flex-col group relative overflow-hidden" hover>
+    <Card className={`h-full flex flex-col group relative overflow-hidden ${isLocked ? 'opacity-75 grayscale-[0.5]' : ''}`} hover={!isLocked}>
       {/* Background decoration */}
       <div className="absolute -right-10 -top-10 w-32 h-32 bg-primary-50 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl"></div>
       
       <div className="flex items-start justify-between mb-4 relative z-10">
         <div className="w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center text-2xl shadow-sm border border-gray-100 group-hover:scale-110 transition-transform duration-300">
-          {getIcon(module.icon)}
+          {isLocked ? '🔒' : getIcon(module.icon)}
         </div>
-        <Badge variant={module.stream === 'beginner' ? 'success' : 'primary'} size="sm">
-          Module {module.order}
+        <Badge variant={isLocked ? 'neutral' : (module.stream === 'beginner' ? 'success' : 'primary')} size="sm">
+          {isLocked ? 'Pro Only' : `Module ${module.order}`}
         </Badge>
       </div>
 
@@ -63,9 +64,14 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({ module, compact = false 
       </div>
 
       <div className="relative z-10 mt-auto pt-4 border-t border-gray-100">
-        <Link href={`/modules/${module.slug}`} className="w-full">
-          <Button variant="outline" fullWidth size="sm" className="group-hover:bg-primary-50 group-hover:border-primary-200">
-            Start Module
+        <Link href={isLocked ? '/pricing' : `/modules/${module.slug}`} className="w-full">
+          <Button 
+            variant={isLocked ? 'primary' : 'outline'} 
+            fullWidth 
+            size="sm" 
+            className={isLocked ? '' : 'group-hover:bg-primary-50 group-hover:border-primary-200'}
+          >
+            {isLocked ? 'Upgrade to Unlock 🔓' : 'Start Module'}
           </Button>
         </Link>
       </div>
