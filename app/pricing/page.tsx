@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import { Badge, Button, Card } from '@/components/ui'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -39,7 +40,9 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$0</span>
               <span className="text-gray-500">/month</span>
             </div>
-            <Button variant="outline" fullWidth className="mb-8">Get Started Free</Button>
+            <Link href="/auth/signup?plan=starter" className="w-full mb-8">
+              <Button variant="outline" fullWidth>Get Started Free</Button>
+            </Link>
             
             <div className="space-y-4 flex-grow">
               <p className="font-semibold text-gray-900">Includes:</p>
@@ -73,7 +76,9 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$29</span>
               <span className="text-gray-500">/month</span>
             </div>
-            <Button variant="primary" fullWidth className="mb-8">Start 7-Day Free Trial</Button>
+            <Link href="/auth/signup?plan=pro" className="w-full mb-8">
+              <Button variant="primary" fullWidth>Start 7-Day Free Trial</Button>
+            </Link>
             
             <div className="space-y-4 flex-grow">
               <p className="font-semibold text-gray-900">Everything in Starter, plus:</p>
@@ -108,7 +113,9 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$99</span>
               <span className="text-gray-500">/month per 5 seats</span>
             </div>
-            <Button variant="outline" fullWidth className="mb-8">Contact Sales</Button>
+            <Link href="/contact" className="w-full mb-8">
+              <Button variant="outline" fullWidth>Contact Sales</Button>
+            </Link>
             
             <div className="space-y-4 flex-grow">
               <p className="font-semibold text-gray-900">Everything in Pro, plus:</p>

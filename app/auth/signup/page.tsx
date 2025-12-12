@@ -1,13 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Button, Input, Card } from '@/components/ui'
+import { Button, Input, Card, Badge } from '@/components/ui'
 
-export default function SignUpPage() {
+function SignUpForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const plan = searchParams.get('plan')
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -15,6 +17,16 @@ export default function SignUpPage() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const getPlanName = (p: string | null) => {
+    switch(p) {
+      case 'starter': return 'Starter Plan'
+      case 'pro': return 'Pro Academy Plan'
+      default: return null
+    }
+  }
+
+  const planName = getPlanName(plan)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,7 +52,7 @@ export default function SignUpPage() {
       const res = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password, name }),
+        body: JSON.stringify({ email, password, name, plan }),
       })
 
       const data = await res.json()
@@ -56,11 +68,11 @@ export default function SignUpPage() {
         email,
         password,
         redirect: false,
-        callbackUrl: '/modules',
+        callbackUrl: '/dashboard',
       })
 
       if (result?.ok) {
-        router.push('/modules')
+        router.push('/dashboard')
         router.refresh()
       } else {
         setError('Account created. Please sign in.')
@@ -77,6 +89,11 @@ export default function SignUpPage() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
+          {planName && (
+            <Badge variant="primary" className="mb-4">
+              Selected: {planName}
+            </Badge>
+          )}
           <h1 className="text-3xl font-heading font-bold text-gray-900">
             Create your account
           </h1>
@@ -158,5 +175,13 @@ export default function SignUpPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <SignUpForm />
+    </Suspense>
   )
 }
