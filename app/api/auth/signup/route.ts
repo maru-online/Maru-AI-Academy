@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import prisma from '@/lib/prisma'
+import { Plan } from '@prisma/client'
 
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { email, password, name } = body
+    const { email, password, name, plan } = body
 
     if (!email || !password) {
       return NextResponse.json(
@@ -26,6 +27,11 @@ export async function POST(request: Request) {
       )
     }
 
+    // Determine Plan
+    let userPlan = Plan.FREE
+    if (plan === 'pro') userPlan = Plan.PRO
+    if (plan === 'team') userPlan = Plan.TEAM
+
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12)
 
@@ -35,6 +41,7 @@ export async function POST(request: Request) {
         email,
         name,
         password: hashedPassword,
+        plan: userPlan,
       },
     })
 

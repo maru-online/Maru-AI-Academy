@@ -45,6 +45,7 @@ model User {
   image         String?
   password      String?   // For credentials auth
   role          Role      @default(USER)
+  plan          Plan      @default(FREE)
   accounts      Account[]
   sessions      Session[]
   progress      Progress[]
@@ -116,4 +117,10 @@ enum Role {
 enum Stream {
   BEGINNER
   INTERMEDIATE
+}
+
+enum Plan {
+  FREE
+  PRO
+  TEAM
 }

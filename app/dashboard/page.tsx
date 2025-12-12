@@ -107,9 +107,22 @@ export default async function DashboardPage() {
                 <div>
                   <p className="font-bold text-gray-900">{user?.name}</p>
                   <p className="text-sm text-gray-500">{user?.email}</p>
+                  <div className="mt-1">
+                    <Badge variant={(user as any).plan === 'PRO' ? 'success' : 'neutral'}>
+                      {(user as any).plan || 'FREE'} PLAN
+                    </Badge>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-2">
+              
+              <div className="space-y-3">
+                {(!((user as any).plan) || (user as any).plan === 'FREE') && (
+                  <Link href="/pricing">
+                    <Button variant="primary" size="sm" fullWidth className="mb-2">
+                      Upgrade to Pro ✨
+                    </Button>
+                  </Link>
+                )}
                 <Link href="/settings" className="block text-sm text-gray-600 hover:text-primary-600">
                   ⚙️ Account Settings
                 </Link>
