@@ -5,14 +5,94 @@ const router = Router();
 
 // Fallback Mock Data
 const MOCK_MODULES = [
-  { id: "1", title: "AI Made Simple", stream: "beginner", description: "Foundations & Safety", slug: "ai-made-simple", order: 1 },
-  { id: "2", title: "Prompts That Work at Work", stream: "beginner", description: "Mastering Prompting", slug: "prompts-that-work", order: 2 },
-  { id: "3", title: "Picking Tools & No-Code Quick Wins", stream: "beginner", description: "Tools Landscape", slug: "no-code-quick-wins", order: 3 },
-  { id: "4", title: "Your First Live Workflow", stream: "beginner", description: "Capstone", slug: "first-live-workflow", order: 4 },
-  { id: "5", title: "From Ad-Hoc to Repeatable", stream: "intermediate", description: "Standardization", slug: "ad-hoc-to-repeatable", order: 1 },
-  { id: "6", title: "Semantic Search & Private Knowledge", stream: "intermediate", description: "RAG & Vector DBs", slug: "semantic-search-private-knowledge", order: 2 },
-  { id: "7", title: "No-Code Automations That Stick", stream: "intermediate", description: "Robust Automation", slug: "no-code-automations", order: 3 },
-  { id: "8", title: "Measurement, Governance & Handover", stream: "intermediate", description: "Leading AI", slug: "measurement-governance", order: 4 }
+  { 
+    id: "b-m1", 
+    title: "AI Made Simple", 
+    stream: "BEGINNER", 
+    description: "Foundations & Safety. Understand what AI is, how it works, and how to use it securely in your workplace.", 
+    slug: "ai-made-simple", 
+    order: 1, 
+    icon: 'bulb', 
+    duration: '2 hours',
+    lessonsCount: 5
+  },
+  { 
+    id: "b-m2", 
+    title: "Prompts That Work at Work", 
+    stream: "BEGINNER", 
+    description: "Master the art of prompting. Learn techniques to get consistent, high-quality results from AI models.", 
+    slug: "prompts-that-work", 
+    order: 2, 
+    icon: 'message', 
+    duration: '2.5 hours',
+    lessonsCount: 6 
+  },
+  { 
+    id: "b-m3", 
+    title: "Picking Tools & No-Code Quick Wins", 
+    stream: "BEGINNER", 
+    description: "Navigate the AI tool landscape and build simple automations without writing any code.", 
+    slug: "no-code-quick-wins", 
+    order: 3, 
+    icon: 'tool', 
+    duration: '3 hours',
+    lessonsCount: 4 
+  },
+  { 
+    id: "b-m4", 
+    title: "Your First Live Workflow", 
+    stream: "BEGINNER", 
+    description: "Capstone Project. Build and deploy a real-world AI workflow that solves a specific business problem.", 
+    slug: "first-live-workflow", 
+    order: 4, 
+    icon: 'rocket', 
+    duration: '4 hours',
+    lessonsCount: 3 
+  },
+  { 
+    id: "i-m1", 
+    title: "From Ad-Hoc to Repeatable", 
+    stream: "INTERMEDIATE", 
+    description: "Transform one-off success into reliable systems. Standardize your prompts and workflows.", 
+    slug: "ad-hoc-to-repeatable", 
+    order: 1, 
+    icon: 'repeat', 
+    duration: '3 hours',
+    lessonsCount: 5 
+  },
+  { 
+    id: "i-m2", 
+    title: "Semantic Search & Private Knowledge", 
+    stream: "INTERMEDIATE", 
+    description: "Unlock your company data. Learn about RAG, vector databases, and chatting with your documents.", 
+    slug: "semantic-search-private-knowledge", 
+    order: 2, 
+    icon: 'search', 
+    duration: '3.5 hours',
+    lessonsCount: 6 
+  },
+  { 
+    id: "i-m3", 
+    title: "No-Code Automations That Stick", 
+    stream: "INTERMEDIATE", 
+    description: "Advanced no-code strategies. Build robust, error-handled automations that run reliably.", 
+    slug: "no-code-automations", 
+    order: 3, 
+    icon: 'puzzle', 
+    duration: '4 hours',
+    lessonsCount: 8 
+  },
+  { 
+    id: "i-m4", 
+    title: "Measurement, Governance & Handover", 
+    stream: "INTERMEDIATE", 
+    description: "Leading AI initiatives. How to measure ROI, ensure compliance, and manage team adoption.',", 
+    slug: "measurement-governance", 
+    order: 4, 
+    icon: 'shield', 
+    duration: '3 hours',
+    lessonsCount: 4 
+  }
 ];
 
 // GET all modules

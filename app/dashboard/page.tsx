@@ -8,6 +8,9 @@ export const metadata = {
   title: 'My Dashboard | Maru AI Academy',
 }
 
+import prisma from '@/lib/prisma'
+import { STREAMS } from '@/types/modules'
+
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions)
 
@@ -16,6 +19,19 @@ export default async function DashboardPage() {
   }
 
   const user = session.user
+  const userId = (user as any).id
+  
+  // Calculate Progress
+  const completedCount = await prisma.progress.count({
+    where: {
+      userId: userId,
+      completed: true
+    }
+  })
+
+  // Calculate total lessons from static constants
+  const totalLessons = STREAMS.flatMap(s => s.modules).reduce((acc, m) => acc + (m.lessonsCount || 0), 0)
+  const progressPercent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -44,18 +60,18 @@ export default async function DashboardPage() {
                   <h2 className="text-xl font-bold text-gray-900">Beginner Stream: AI Made Simple</h2>
                 </div>
                 <div className="text-right">
-                  <span className="text-2xl font-bold text-primary-600">25%</span>
-                  <p className="text-xs text-gray-500">Complete</p>
+                  <span className="text-2xl font-bold text-primary-600">{progressPercent}%</span>
+                  <p className="text-xs text-gray-500">Global Completion</p>
                 </div>
               </div>
               
               <div className="w-full bg-gray-100 rounded-full h-2.5 mb-6">
-                <div className="bg-primary-600 h-2.5 rounded-full" style={{ width: '25%' }}></div>
+                <div className="bg-primary-600 h-2.5 rounded-full" style={{ width: `${progressPercent}%` }}></div>
               </div>
 
               <div className="flex items-center justify-between">
                 <p className="text-sm text-gray-600">
-                  Next Lesson: <strong>Understanding LLMs</strong>
+                  Total Lessons Completed: <strong>{completedCount} / {totalLessons}</strong>
                 </p>
                 <Link href="/modules/ai-made-simple">
                   <Button size="sm">Continue Learning &rarr;</Button>
