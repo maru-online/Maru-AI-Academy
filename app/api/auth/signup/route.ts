@@ -45,6 +45,14 @@ export async function POST(request: Request) {
         } as any,
       })
 
+      // Send welcome email (non-blocking)
+      // Dynamic import to avoid circular dependencies
+      import('@/lib/email').then(({ sendWelcomeEmail }) => {
+        sendWelcomeEmail(user.email!, user.name || 'there').catch(err => {
+          console.error('Failed to send welcome email:', err);
+        });
+      });
+
       return NextResponse.json({
         user: {
           id: user.id,
@@ -60,6 +68,7 @@ export async function POST(request: Request) {
         { status: 500 }
       )
     }
+
 
   } catch (error: any) {
     console.error('Signup error:', error)

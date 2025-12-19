@@ -49,6 +49,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   progress      Progress[]
+  lessonProgress LessonProgress[] @relation("UserLessonProgress")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -109,6 +110,57 @@ model Progress {
   @@unique([userId, moduleId])
   @@unique([userId, lessonId])
 }
+
+// Detailed lesson progress tracking (Week 1 - Day 5)
+model LessonProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation("UserLessonProgress", fields: [userId], references: [id], onDelete: Cascade)
+  moduleSlug  String
+  lessonSlug  String
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  timeSpent   Int       @default(0) // in seconds
+  score       Int?      // quiz score percentage
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([userId, moduleSlug, lessonSlug])
+  @@index([userId])
+  @@index([moduleSlug])
+}
+
+// Support ticket system (Week 1 - Day 3)
+model SupportTicket {
+  id        String   @id @default(cuid())
+  userId    String?
+  email     String
+  subject   String
+  message   String   @db.Text
+  status    String   @default("open") // open, pending, closed
+  priority  String   @default("normal") // low, normal, high
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([email])
+}
+
+// Contact form submissions (Week 1 - Day 3)
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String   @db.Text
+  type      String   @default("general") // general, sales, support, partnership
+  replied   Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([replied])
+}
+
 
 enum Role {
   USER
