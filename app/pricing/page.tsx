@@ -1,17 +1,19 @@
 import { Metadata } from 'next'
 import { Badge, Button, Card } from '@/components/ui'
 import Link from 'next/link'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import PaystackButton from '@/components/pricing/PaystackButton'
 
 export const metadata: Metadata = {
   title: 'Pricing',
   description: 'Simple, transparent pricing for Maru AI Academy. From free starter plans to team training - find the right plan for your AI learning journey.',
-  openGraph: {
-    title: 'Pricing - Maru AI Academy',
-    description: 'Invest in your future productivity. Simple, transparent pricing with a 30-day money-back guarantee.',
-  },
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  const session = await getServerSession(authOptions)
+  const user: any = session?.user
+
   return (
     <div className="bg-gray-50 min-h-screen py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -40,8 +42,8 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$0</span>
               <span className="text-gray-500">/month</span>
             </div>
-            <Link href="/auth/signup?plan=starter" className="w-full mb-8">
-              <Button variant="outline" fullWidth>Get Started Free</Button>
+            <Link href={session ? "/dashboard" : "/auth/signup?plan=starter"} className="w-full mb-8">
+              <Button variant="outline" fullWidth>{session ? 'Go to Dashboard' : 'Get Started Free'}</Button>
             </Link>
             
             <div className="space-y-4 flex-grow">
@@ -76,9 +78,20 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$29</span>
               <span className="text-gray-500">/month</span>
             </div>
-            <Link href="/auth/signup?plan=pro" className="w-full mb-8">
-              <Button variant="primary" fullWidth>Start 7-Day Free Trial</Button>
-            </Link>
+            <div className="w-full mb-8">
+              {session ? (
+                <PaystackButton 
+                  email={user.email}
+                  amount={550} // R550 (~$29)
+                  metadata={{ plan: 'PRO', userId: user.id }}
+                  label="Upgrade to Pro"
+                />
+              ) : (
+                <Link href="/auth/signup?plan=pro">
+                  <Button variant="primary" fullWidth>Start 7-Day Free Trial</Button>
+                </Link>
+              )}
+            </div>
             
             <div className="space-y-4 flex-grow">
               <p className="font-semibold text-gray-900">Everything in Starter, plus:</p>
@@ -113,9 +126,20 @@ export default function PricingPage() {
               <span className="text-4xl font-bold text-gray-900">$99</span>
               <span className="text-gray-500">/month per 5 seats</span>
             </div>
-            <Link href="/contact" className="w-full mb-8">
-              <Button variant="outline" fullWidth>Contact Sales</Button>
-            </Link>
+            <div className="w-full mb-8">
+              {session ? (
+                <PaystackButton 
+                  email={user.email}
+                  amount={1800} // R1800 (~$99)
+                  metadata={{ plan: 'TEAM', userId: user.id }}
+                  label="Get Team Plan"
+                />
+              ) : (
+                <Link href="/contact">
+                  <Button variant="outline" fullWidth>Contact Sales</Button>
+                </Link>
+              )}
+            </div>
             
             <div className="space-y-4 flex-grow">
               <p className="font-semibold text-gray-900">Everything in Pro, plus:</p>
@@ -155,3 +179,4 @@ export default function PricingPage() {
     </div>
   )
 }
+
