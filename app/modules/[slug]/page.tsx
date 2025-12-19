@@ -201,7 +201,7 @@ export default async function ModulePage({ params }: { params: { slug: string } 
                   <LessonItem
                     key={lesson.id}
                     lessonId={lesson.id}
-                    moduleId={module.id}
+                    moduleId={module.slug} // Use slug for better URL/DB matching
                     title={lesson.title}
                     duration={lesson.duration}
                     index={i + 1}

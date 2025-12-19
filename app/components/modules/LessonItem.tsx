@@ -33,12 +33,12 @@ export const LessonItem = ({
     setLoading(true)
 
     try {
-      const res = await fetch('/api/progress', {
+      const res = await fetch('/api/progress/mark-complete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          lessonId,
-          moduleId,
+          moduleSlug: moduleId,
+          lessonSlug: lessonId,
           completed: newState,
         }),
       })
