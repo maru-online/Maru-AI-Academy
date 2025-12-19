@@ -1,16 +1,66 @@
-import { Metadata } from 'next'
+'use client'
+
+import { useState } from 'react'
 import { Badge, Button, Input, Textarea } from '@/components/ui'
 
-export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: 'Get in touch with Maru AI Academy. Questions about courses? Want team training? We are here to help you on your AI learning journey.',
-  openGraph: {
-    title: 'Contact Maru AI Academy',
-    description: 'Have questions? We would love to hear from you. Reach out about courses, team training, or partnerships.',
-  },
-}
-
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    topic: 'General Inquiry',
+    message: '',
+  })
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    setSuccess(false)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          email: formData.email,
+          message: `Topic: ${formData.topic}\n\n${formData.message}`,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      setSuccess(true)
+      // Clear form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        topic: 'General Inquiry',
+        message: '',
+      })
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
   return (
     <div className="bg-gray-50 min-h-screen py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -47,9 +97,9 @@ export default function ContactPage() {
                 <div>
                   <h3 className="text-lg font-bold text-gray-900 mb-1">Live Chat</h3>
                   <p className="text-gray-600 mb-1">Available 24/7</p>
-                  <button className="text-primary-600 font-semibold hover:text-primary-700 text-left">
-                    Start a chat
-                  </button>
+                  <p className="text-gray-500 text-sm">
+                    Click the chat icon in the bottom right corner
+                  </p>
                 </div>
               </div>
             </div>
@@ -58,19 +108,63 @@ export default function ContactPage() {
           {/* Contact Form */}
           <div className="bg-white rounded-2xl shadow-xl p-8 sm:p-10">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a message</h2>
-            <form className="space-y-6">
+            
+            {success && (
+              <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-green-800 font-semibold">✅ Message sent successfully!</p>
+                <p className="text-green-600 text-sm mt-1">We'll get back to you within 24 hours.</p>
+              </div>
+            )}
+
+            {error && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-800 font-semibold">❌ {error}</p>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-6">
-                <Input label="First Name" placeholder="Jane" fullWidth />
-                <Input label="Last Name" placeholder="Doe" fullWidth />
+                <Input 
+                  label="First Name" 
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  placeholder="Jane" 
+                  required
+                  fullWidth 
+                />
+                <Input 
+                  label="Last Name" 
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  placeholder="Doe" 
+                  required
+                  fullWidth 
+                />
               </div>
               
-              <Input label="Email Address" type="email" placeholder="jane@company.com" fullWidth />
+              <Input 
+                label="Email Address" 
+                type="email" 
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="jane@company.com" 
+                required
+                fullWidth 
+              />
               
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Topic
                 </label>
-                <select className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-colors bg-white">
+                <select 
+                  name="topic"
+                  value={formData.topic}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-colors bg-white"
+                >
                   <option>General Inquiry</option>
                   <option>Course Support</option>
                   <option>Team Training</option>
@@ -78,10 +172,25 @@ export default function ContactPage() {
                 </select>
               </div>
 
-              <Textarea label="Message" rows={5} placeholder="How can we help you?" fullWidth />
+              <Textarea 
+                label="Message" 
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={5} 
+                placeholder="How can we help you?" 
+                required
+                fullWidth 
+              />
 
-              <Button variant="primary" fullWidth size="lg">
-                Send Message
+              <Button 
+                type="submit"
+                variant="primary" 
+                fullWidth 
+                size="lg"
+                disabled={loading}
+              >
+                {loading ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
           </div>

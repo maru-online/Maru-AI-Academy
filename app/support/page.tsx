@@ -1,14 +1,67 @@
-import { Metadata } from 'next'
+'use client'
+
+import { useState } from 'react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { Card, Input, Textarea, Button } from '@/components/ui'
 import { MessageCircle, Mail, Book, HelpCircle } from 'lucide-react'
 
-export const metadata: Metadata = {
-  title: 'Support | Maru AI Academy',
-  description: 'Get help and support for your learning journey',
-}
-
 export default function SupportPage() {
+  const { data: session } = useSession()
+  
+  const [formData, setFormData] = useState({
+    name: session?.user?.name || '',
+    email: session?.user?.email || '',
+    topic: 'Technical Support',
+    subject: '',
+    message: '',
+  })
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
+    setSuccess(false)
+
+    try {
+      const response = await fetch('/api/support', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit ticket')
+      }
+
+      setSuccess(true)
+      // Clear form
+      setFormData({
+        name: session?.user?.name || '',
+        email: session?.user?.email || '',
+        topic: 'Technical Support',
+        subject: '',
+        message: '',
+      })
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }))
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -56,11 +109,27 @@ export default function SupportPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-2">Send us a message</h2>
               <p className="text-gray-600 mb-6">Our support team typically responds within 24 hours</p>
               
-              <form className="space-y-6">
+              {success && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <p className="text-green-800 font-semibold">✅ Support ticket submitted successfully!</p>
+                  <p className="text-green-600 text-sm mt-1">We'll email you a confirmation and respond within 24 hours.</p>
+                </div>
+              )}
+
+              {error && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-800 font-semibold">❌ {error}</p>
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <Input
                     label="Your Name"
                     type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="John Doe"
                     required
                     fullWidth
@@ -68,6 +137,9 @@ export default function SupportPage() {
                   <Input
                     label="Email Address"
                     type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="you@example.com"
                     required
                     fullWidth
@@ -78,7 +150,12 @@ export default function SupportPage() {
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Topic
                   </label>
-                  <select className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-colors bg-white">
+                  <select 
+                    name="topic"
+                    value={formData.topic}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-primary-500 focus:ring-2 focus:ring-primary-200 transition-colors bg-white"
+                  >
                     <option>Technical Support</option>
                     <option>Billing Question</option>
                     <option>Course Content</option>
@@ -90,6 +167,9 @@ export default function SupportPage() {
                 <Input
                   label="Subject"
                   type="text"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
                   placeholder="Brief description of your issue"
                   required
                   fullWidth
@@ -97,14 +177,17 @@ export default function SupportPage() {
 
                 <Textarea
                   label="Message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
                   rows={6}
                   placeholder="Please provide as much detail as possible..."
                   required
                   fullWidth
                 />
 
-                <Button variant="primary" size="lg" fullWidth type="submit">
-                  Send Message
+                <Button variant="primary" size="lg" fullWidth type="submit" disabled={loading}>
+                  {loading ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
             </Card>
