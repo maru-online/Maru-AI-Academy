@@ -20,9 +20,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Get all lesson progress for the user
-    const lessonProgress = await prisma.lessonProgress.findMany({
+    const userId = (session.user as any).id;
+    const lessonProgress = await (prisma as any).lessonProgress.findMany({
       where: {
-        userId: session.user.id,
+        userId: userId,
       },
       orderBy: {
         updatedAt: 'desc',
@@ -30,8 +31,8 @@ export async function GET(request: NextRequest) {
     });
 
     // Calculate summary statistics
-    const totalLessonsCompleted = lessonProgress.filter(p => p.completed).length;
-    const totalTimeSpent = lessonProgress.reduce((sum, p) => sum + (p.timeSpent || 0), 0);
+    const totalLessonsCompleted = lessonProgress.filter((p: any) => p.completed).length;
+    const totalTimeSpent = lessonProgress.reduce((sum: number, p: any) => sum + (p.timeSpent || 0), 0);
     
     // Group by module to get enriched stats
     const moduleStatsArray = [];
@@ -40,11 +41,11 @@ export async function GET(request: NextRequest) {
     for (const module of allModules) {
       // Find progress for this module (using slug)
       // Note: we support matching by either slug OR id for backward compatibility
-      const moduleProgress = lessonProgress.filter(p => 
+      const moduleProgress = lessonProgress.filter((p: any) => 
         p.moduleSlug === module.slug || p.moduleSlug === module.id
       );
       
-      const completedCount = moduleProgress.filter(p => p.completed).length;
+      const completedCount = moduleProgress.filter((p: any) => p.completed).length;
       
       // Only include started modules or modules with progress
       if (completedCount > 0) {
@@ -62,9 +63,9 @@ export async function GET(request: NextRequest) {
     }
 
     // Calculate current streak (consecutive days with activity)
-    const recentProgress = await prisma.lessonProgress.findMany({
+    const recentProgress = await (prisma as any).lessonProgress.findMany({
       where: {
-        userId: session.user.id,
+        userId: (session.user as any).id,
         updatedAt: {
           gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // Last 30 days
         },
@@ -84,10 +85,9 @@ export async function GET(request: NextRequest) {
       
       let checkDate = new Date(today);
       let foundGap = false;
-      let hasToday = false;
 
       // Check if there's activity today to start the loop
-      const hasActivityToday = recentProgress.some(p => {
+      const hasActivityToday = recentProgress.some((p: any) => {
         const d = new Date(p.updatedAt);
         d.setHours(0, 0, 0, 0);
         return d.getTime() === today.getTime();
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
       }
 
       while (!foundGap && checkDate > new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)) {
-        const hasActivityOnDate = recentProgress.some(p => {
+        const hasActivityOnDate = recentProgress.some((p: any) => {
           const progressDate = new Date(p.updatedAt);
           progressDate.setHours(0, 0, 0, 0);
           return progressDate.getTime() === checkDate.getTime();

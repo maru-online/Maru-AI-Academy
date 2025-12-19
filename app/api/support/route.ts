@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     // Create support ticket
     const ticket = await prisma.supportTicket.create({
       data: {
-        userId: session?.user?.id,
+        userId: (session?.user as any)?.id,
         email,
         subject,
         message,
@@ -91,10 +91,12 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    const userId = (session?.user as any)?.id;
+
     const tickets = await prisma.supportTicket.findMany({
       where: {
         OR: [
-          session?.user?.id ? { userId: session.user.id } : {},
+          userId ? { userId: userId } : {},
           email ? { email } : {},
         ].filter(obj => Object.keys(obj).length > 0),
       },

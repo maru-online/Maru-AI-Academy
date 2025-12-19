@@ -24,9 +24,10 @@ export async function GET(
     const { slug } = params;
 
     // Get all progress for this module
-    const moduleProgress = await prisma.lessonProgress.findMany({
+    const userId = (session.user as any).id;
+    const moduleProgress = await (prisma as any).lessonProgress.findMany({
       where: {
-        userId: session.user.id,
+        userId: userId,
         moduleSlug: slug,
       },
       orderBy: {
@@ -35,11 +36,11 @@ export async function GET(
     });
 
     // Calculate module statistics
-    const completedLessons = moduleProgress.filter(p => p.completed).length;
-    const totalTime = moduleProgress.reduce((sum, p) => sum + p.timeSpent, 0);
-    const scores = moduleProgress.filter(p => p.score !== null).map(p => p.score!);
+    const completedLessons = moduleProgress.filter((p: any) => p.completed).length;
+    const totalTime = moduleProgress.reduce((sum: number, p: any) => sum + (p.timeSpent || 0), 0);
+    const scores = moduleProgress.filter((p: any) => p.score !== null).map((p: any) => p.score!);
     const averageScore = scores.length > 0
-      ? scores.reduce((sum, score) => sum + score, 0) / scores.length
+      ? scores.reduce((sum: number, score: number) => sum + score, 0) / scores.length
       : null;
 
     return NextResponse.json({

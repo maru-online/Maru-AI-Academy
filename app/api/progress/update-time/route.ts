@@ -37,10 +37,11 @@ export async function POST(request: NextRequest) {
     }
 
     // to update or create the progress record
-    const progress = await prisma.lessonProgress.upsert({
+    const userId = (session.user as any).id;
+    const progress = await (prisma as any).lessonProgress.upsert({
       where: {
         userId_moduleSlug_lessonSlug: {
-          userId: session.user.id,
+          userId: userId,
           moduleSlug,
           lessonSlug,
         },
@@ -51,7 +52,7 @@ export async function POST(request: NextRequest) {
         },
       },
       create: {
-        userId: session.user.id,
+        userId: userId,
         moduleSlug,
         lessonSlug,
         timeSpent,
