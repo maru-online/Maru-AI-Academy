@@ -295,4 +295,4 @@ Once all API keys are configured and tested:
 
 **Estimated Setup Time**: 15-20 minutes (including verification)
 
-**Last Updated**: December 19, 2024
+**Last Updated**: December 19, 2025
