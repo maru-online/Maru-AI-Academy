@@ -45,8 +45,11 @@ export const Header = () => {
                     Dashboard
                   </Button>
                 </Link>
-                <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 font-bold border border-primary-200">
-                  {session.user?.name?.[0] || 'U'}
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium text-gray-700 hidden lg:block">Hi, {session.user?.name?.split(' ')[0] || 'User'}</span>
+                  <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 font-bold border border-primary-200">
+                    {session.user?.name?.[0] || 'U'}
+                  </div>
                 </div>
               </div>
             ) : (
