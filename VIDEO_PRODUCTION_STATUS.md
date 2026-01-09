@@ -18,6 +18,17 @@
 | | 2.4 | Report Generator | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
 | | 2.5 | Prompt Chaining | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
 
+## Beginner Stream (continued)
+
+| Module | Lesson | Topic | Script Status | Video Status | Embed Status |
+|--------|--------|-------|---------------|--------------|--------------|
+| **3. No-Code Quick Wins** | 3.1 | PRICE Framework | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| | 3.2 | TAC Pattern | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| **4. Capstone Workflow** | 4.1 | Choose Capstone | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| | 4.2 | Design Workflow | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| | 4.3 | Test & Launch | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| | 4.4 | Measure & Improve | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+
 ## Intermediate Stream
 
 | Module | Lesson | Topic | Script Status | Video Status | Embed Status |
