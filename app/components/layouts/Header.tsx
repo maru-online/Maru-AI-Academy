@@ -25,6 +25,9 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <a href="https://maruonline.com" className="text-gray-500 hover:text-primary-600 transition-colors font-medium text-sm flex items-center gap-1">
+              ← Maru Online
+            </a>
             <Link href="/modules" className="text-gray-700 hover:text-primary-600 transition-colors font-medium">
               Modules
             </Link>
@@ -81,6 +84,9 @@ export const Header = () => {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
+              <a href="https://maruonline.com" className="text-gray-500 hover:text-primary-600 transition-colors font-medium">
+                ← Back to Maru Online
+              </a>
               <Link href="/modules" className="text-gray-700 hover:text-primary-600 transition-colors font-medium">
                 Modules
               </Link>
