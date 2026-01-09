@@ -7,12 +7,16 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // API rewrites to backend
+  // API rewrites to backend (only for modules API - auth and other routes are local)
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/:path*`,
+        source: '/api/modules',
+        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/modules`,
+      },
+      {
+        source: '/api/modules/:path*',
+        destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/api/modules/:path*`,
       },
     ];
   },
