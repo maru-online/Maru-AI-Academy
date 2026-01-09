@@ -1,3 +1,4 @@
+// Maru AI Academy v1.1.0 - Jan 9, 2026
 import type { Metadata, Viewport } from 'next'
 import { Inter, Outfit } from 'next/font/google'
 import './globals.css'
