@@ -3,7 +3,8 @@ import { Badge, Button, Card } from '@/components/ui'
 import Link from 'next/link'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth'
-import PaystackButton from '@/components/pricing/PaystackButton'
+import PayFastButton from '@/components/pricing/PayFastButton'
+import PayPalButtonWrapper from '@/components/pricing/PayPalButton'
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -39,7 +40,7 @@ export default async function PricingPage() {
               <p className="text-gray-500 mt-2">For individuals just exploring AI.</p>
             </div>
             <div className="mb-6">
-              <span className="text-4xl font-bold text-gray-900">$0</span>
+              <span className="text-4xl font-bold text-gray-900">R0</span>
               <span className="text-gray-500">/month</span>
             </div>
             <Link href={session ? "/dashboard" : "/auth/signup?plan=starter"} className="w-full mb-8">
@@ -74,18 +75,28 @@ export default async function PricingPage() {
               <h3 className="text-xl font-bold text-gray-900">Pro Academy</h3>
               <p className="text-gray-500 mt-2">For professionals serious about upskilling.</p>
             </div>
-            <div className="mb-6">
-              <span className="text-4xl font-bold text-gray-900">$29</span>
+            <div className="mb-6 flex items-baseline gap-2">
+              <span className="text-4xl font-bold text-gray-900">R550</span>
               <span className="text-gray-500">/month</span>
+              <span className="text-xs text-gray-400">($29 USD)</span>
             </div>
-            <div className="w-full mb-8">
+            
+            <div className="w-full mb-4 space-y-3">
               {session ? (
-                <PaystackButton 
-                  email={user.email}
-                  amount={550} // R550 (~$29)
-                  metadata={{ plan: 'PRO', userId: user.id }}
-                  label="Upgrade to Pro"
-                />
+                <>
+                  <PayFastButton plan="PRO" amount={550} />
+                  
+                  {/* PayPal Temporarily Disabled
+                  <div className="relative flex py-1 items-center">
+                    <div className="flex-grow border-t border-gray-200"></div>
+                    <span className="flex-shrink-0 mx-4 text-gray-400 text-xs">OR PAYPAL</span>
+                    <div className="flex-grow border-t border-gray-200"></div>
+                  </div>
+
+                  <PayPalButtonWrapper plan="PRO" amount={29} />
+                  */}
+                  <p className="text-center mt-3 text-xs text-gray-400">International (PayPal) payments coming soon.</p>
+                </>
               ) : (
                 <Link href="/auth/signup?plan=pro">
                   <Button variant="primary" fullWidth>Start 7-Day Free Trial</Button>
@@ -122,18 +133,31 @@ export default async function PricingPage() {
               <h3 className="text-xl font-bold text-gray-900">Team</h3>
               <p className="text-gray-500 mt-2">For organizations training their workforce.</p>
             </div>
-            <div className="mb-6">
-              <span className="text-4xl font-bold text-gray-900">$99</span>
-              <span className="text-gray-500">/month per 5 seats</span>
+            <div className="mb-6 flex items-baseline gap-2">
+              <span className="text-4xl font-bold text-gray-900">R1,800</span>
+              <span className="text-gray-500">/mo</span>
+              <span className="text-xs text-gray-400">($99 USD)</span>
             </div>
-            <div className="w-full mb-8">
+            <div className="w-full mb-8 space-y-3">
               {session ? (
-                <PaystackButton 
-                  email={user.email}
-                  amount={1800} // R1800 (~$99)
-                  metadata={{ plan: 'TEAM', userId: user.id }}
-                  label="Get Team Plan"
-                />
+                 <>
+                  <PayFastButton 
+                    plan="TEAM" 
+                    amount={1800}
+                    label="Get Team Plan"
+                  />
+                  
+                  {/* PayPal Temporarily Disabled 
+                  <div className="relative flex py-1 items-center">
+                    <div className="flex-grow border-t border-gray-200"></div>
+                    <span className="flex-shrink-0 mx-4 text-gray-400 text-xs">OR PAYPAL</span>
+                    <div className="flex-grow border-t border-gray-200"></div>
+                  </div>
+
+                  <PayPalButtonWrapper plan="TEAM" amount={99} />
+                  */}
+                   <p className="text-center mt-3 text-xs text-gray-400">International (PayPal) payments coming soon.</p>
+                </>
               ) : (
                 <Link href="/contact">
                   <Button variant="outline" fullWidth>Contact Sales</Button>
@@ -179,4 +203,3 @@ export default async function PricingPage() {
     </div>
   )
 }
-

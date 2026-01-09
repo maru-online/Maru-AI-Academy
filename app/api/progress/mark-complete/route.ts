@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { checkBadgeEligibility } from '@/lib/badges';
 
 /**
  * Mark a lesson as complete
@@ -58,10 +59,21 @@ export async function POST(request: NextRequest) {
       },
     });
 
+
+
+    // Check for badges
+    let newBadges: any[] = [];
+    try {
+      newBadges = await checkBadgeEligibility(userId);
+    } catch (badgeError) {
+      console.error('Badge check failed (non-blocking):', badgeError);
+    }
+
     return NextResponse.json({
       success: true,
       message: 'Lesson marked as complete',
       progress,
+      newBadges
     });
   } catch (error) {
     console.error('Mark complete error:', error);

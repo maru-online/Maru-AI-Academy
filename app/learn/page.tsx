@@ -36,7 +36,7 @@ export default function LearnPage() {
             </div>
             <div className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-primary-400" />
-              <span className="text-gray-300">Certificate on completion</span>
+              <span className="text-gray-300">Earn mastery badges</span>
             </div>
           </div>
         </div>

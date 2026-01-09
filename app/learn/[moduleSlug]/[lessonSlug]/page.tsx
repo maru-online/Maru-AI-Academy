@@ -30,6 +30,20 @@ function InstructionContent({ step }: { step: LessonStep }) {
       
       {/* Heading */}
       <h2 className="text-2xl font-bold text-gray-900">{instruction.heading}</h2>
+
+      {/* Video Embed */}
+      {instruction.videoUrl && (
+        <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200 aspect-video w-full bg-black">
+          <iframe
+            src={instruction.videoUrl}
+            className="w-full h-full"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            title={instruction.heading}
+          />
+        </div>
+      )}
       
       {/* Body - parse simple markdown */}
       <div className="prose prose-gray max-w-none">

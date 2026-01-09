@@ -10,6 +10,7 @@ export interface LessonStep {
   instruction: {
     heading: string;
     body: string; // Supports markdown-like formatting
+    videoUrl?: string; // URL for explainer video (YouTube/Vimeo/mp4)
     tips?: string[];
     examples?: {
       bad?: string;

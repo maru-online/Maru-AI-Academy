@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { Card, Badge, Button } from '@/components/ui'
 import Link from 'next/link'
 import { DashboardProgress } from './components/DashboardProgress'
+import { BadgeShowcase } from './components/BadgeShowcase'
+import { getUserBadges } from '@/lib/badges'
 
 export const metadata = {
   title: 'My Dashboard | Maru AI Academy',
@@ -18,6 +20,7 @@ export default async function DashboardPage() {
 
   const user = session.user
   const userId = (user as any).id
+  const userBadges = await getUserBadges(userId)
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -40,6 +43,10 @@ export default async function DashboardPage() {
             
             {/* Progress Component */}
             <DashboardProgress userId={userId} />
+
+            {/* Badges */}
+            <BadgeShowcase userBadges={userBadges} />
+
 
             {/* Recommended Next Steps */}
             <div>

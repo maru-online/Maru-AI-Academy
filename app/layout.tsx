@@ -77,6 +77,10 @@ export const metadata: Metadata = {
   },
 }
 
+import ChatWidget from './components/ChatWidget'
+
+// ... existing imports
+
 export default function RootLayout({
   children,
 }: {
@@ -91,6 +95,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <ChatWidget />
         </SessionProvider>
       </body>
     </html>
