@@ -141,8 +141,8 @@ export default async function ModulePage({ params }: { params: { slug: string } 
                   {module.lessonsCount} Lessons
                 </div>
                 <div className="flex items-center">
-                  <span className="text-2xl mr-2">🏆</span>
-                  Certificate on completion
+                  <span className="text-2xl mr-2">🎖️</span>
+                  Earn Badges on completion
                 </div>
               </div>
             </div>
