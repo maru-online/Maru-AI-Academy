@@ -12,11 +12,11 @@
 | | 1.3 | Data Safety (POPIA) | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
 | | 1.4 | The CRAFT Framework | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
 | | 1.5 | Quick Wins Demo | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
-| **2. Prompts at Work** | 2.1 | Template Thinking | ⬜ Pending | ⬜ Pending | ⬜ Pending |
-| | 2.2 | The Perfect Email | ⬜ Pending | ⬜ Pending | ⬜ Pending |
-| | 2.3 | Presentation Builder | ⬜ Pending | ⬜ Pending | ⬜ Pending |
-| | 2.4 | Report Generator | ⬜ Pending | ⬜ Pending | ⬜ Pending |
-| | 2.5 | Prompt Chaining | ⬜ Pending | ⬜ Pending | ⬜ Pending |
+| **2. Prompts at Work** | 2.1 | Template Thinking | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| | 2.2 | The Perfect Email | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| | 2.3 | Presentation Builder | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| | 2.4 | Report Generator | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
+| | 2.5 | Prompt Chaining | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
 
 ## Intermediate Stream
 
