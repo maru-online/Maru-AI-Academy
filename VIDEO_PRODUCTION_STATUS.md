@@ -1,14 +1,14 @@
 # 🎥 Video Production Status
 
 **Target**: 20 Explainer Videos (Short, 2-5 mins)
-**Format**: Intro (Face) + Screen Recording/Animation + Outro.
+**Format**: Personal Recording (Face to Camera Intro + Screen Recording). Reference: `documents/VIDEO_STYLE_GUIDE.md`.
 
 ## Beginner Stream
 
 | Module | Lesson | Topic | Script Status | Video Status | Embed Status |
 |--------|--------|-------|---------------|--------------|--------------|
 | **1. AI Made Simple** | 1.1 | What AI Actually Is | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
-| | 1.2 | Tool Categories | ⬜ Pending | ⬜ Pending | ⬜ Pending |
+| | 1.2 | Tool Categories | ✅ **Ready** | ⬜ Pending | ⬜ Pending |
 | | 1.3 | Data Safety (POPIA) | ⬜ Pending | ⬜ Pending | ⬜ Pending |
 | | 1.4 | The CRAFT Framework | ⬜ Pending | ⬜ Pending | ⬜ Pending |
 | | 1.5 | Quick Wins Demo | ⬜ Pending | ⬜ Pending | ⬜ Pending |

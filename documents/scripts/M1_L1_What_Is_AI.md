@@ -4,14 +4,15 @@
 
 ---
 
-## 🎬 1. Intro (0:00 - 0:20)
-**Visual**: Host (Jimmy or Avatar) on screen. Dynamic text overlay: "Magic vs. Math".
+## 🎬 1. Intro (Face to Camera)
+**Visual**: Jimmy, Full Screen. Friendly & Direct.
 
 **Audio**: 
-"Welcome to the Maru AI Academy. 
-If you’ve watched sci-fi movies, you might think AI is a magic robot brain that can do anything.
-Or maybe you’re worried it’s going to take your job.
-Let’s cut through the hype. Today, we’re going to learn what modern AI *actually* is, and why it’s the most powerful productivity tool you’ve ever had access to."
+"Hi, I'm Jimmy. Welcome to the Maru AI Academy.
+If you’ve watched sci-fi movies, you might think AI is this magic robot brain that can do anything—or maybe take your job.
+But let’s cut through the hype. 
+In this first lesson, I want to show you what modern AI *actually* is, and why it’s about to become the most powerful productivity tool in your toolkit.
+Let’s dive in."
 
 ---
 
@@ -49,11 +50,11 @@ We call this skill **Prompt Engineering**, and that is exactly what you are goin
 
 ---
 
-## 👉 5. Outro & Call to Action (2:15 - 2:30)
-**Visual**: Host returns. Text: "Next Step: Your First Prompt".
+## 👉 5. Outro (Face to Camera)
+**Visual**: Jimmy, Full Screen.
 
 **Audio**: 
-"So, stop worrying about the robot apocalypse.
-Let’s start building your new superpower.
-In the next step, you’re going to write your very first professional prompt.
-Click 'Continute' and let’s dive in."
+"So, don't worry about the robots taking over yet.
+Focus on learning the patterns.
+In the next step below, I want you to write your very first professional prompt using the playground.
+Give it a try, and I'll see you in the next lesson."
